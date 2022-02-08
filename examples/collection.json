@@ -1,8 +1,7 @@
 {
-  "stac_version": "1.0.0-rc.1",
+  "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json",
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json"
   ],
   "type": "Collection",
   "id": "collection",
@@ -29,37 +28,6 @@
       ]
     }
   },
-  "template:new_field": "test",
-  "template:xyz": {
-    "x": 1,
-    "y": 2,
-    "z": 3
-  },
-  "template:another_one": [
-    1,
-    2,
-    3
-  ],
-  "assets": {
-    "example": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
-    }
-  },
-  "item_assets": {
-    "data": {
-      "roles": [
-        "data"
-      ],
-      "template:new_field": "test"
-    }
-  },
-  "summaries": {
-    "datetime": {
-      "minimum": "2015-06-23T00:00:00Z",
-      "maximum": "2019-07-10T13:44:56Z"
-    }
-  },
   "links": [
     {
       "href": "https://example.com/examples/collection.json",
@@ -68,6 +36,25 @@
     {
       "href": "https://example.com/examples/item.json",
       "rel": "item"
+    },
+    {
+      "href": "https://maps.example.com/wmts",
+      "rel": "wmts",
+      "title": "RGB composite visualized through a WMTS",
+      "wmts:layer": "rgb",
+      "wmts:dimensions": {
+        "time": "2022-01-01"
+      }
+    },
+    {
+      "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}",
+      "rel": "xyz",
+      "title": "RGB composite visualized through a XYZ",
+      "xyz:servers": [
+        "a",
+        "b",
+        "c"
+      ]
     }
   ]
 }

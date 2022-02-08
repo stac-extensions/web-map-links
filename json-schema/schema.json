@@ -1,209 +1,123 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/template/v1.0.0/schema.json#",
-  "title": "Template Extension",
-  "description": "STAC Template Extension for STAC Items and STAC Collections.",
-  "oneOf": [
-    {
-      "$comment": "This is the schema for STAC Items. Remove this object if this extension only applies to Collections.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/stac_extensions"
-        },
-        {
-          "type": "object",
-          "required": [
-            "type",
-            "properties",
-            "assets"
-          ],
-          "properties": {
-            "type": {
-              "const": "Feature"
-            },
-            "properties": {
-              "allOf": [
-                {
-                  "$comment": "Require fields here for Item Properties.",
-                  "required": [
-                    "template:new_field"
-                  ]
-                },
-                {
-                  "$ref": "#/definitions/fields"
-                }
-              ]
-            },
-            "assets": {
-              "$comment": "This validates the fields in Item Assets, but does not require them.",
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/definitions/fields"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "$comment": "This is the schema for STAC Collections.",
-      "type": "object",
-      "allOf": [
-        {
-          "required": [
-            "type"
-          ],
-          "properties": {
-            "type": {
-              "const": "Collection"
-            }
-          }
-        },
-        {
-          "$ref": "#/definitions/stac_extensions"
-        }
-      ],
-      "anyOf": [
-        {
-          "$comment": "This is the schema for the top-level fields in a Collection. Remove this if this extension does not define top-level fields for Collections.",
-          "allOf": [
-            {
-              "$comment": "Require fields here for Collections (top-level).",
-              "required": [
-                "template:new_field"
-              ]
-            },
-            {
-              "$ref": "#/definitions/fields"
-            }
-          ]
-        },
-        {
-          "$comment": "This validates the fields in Collection Assets, but does not require them.",
-          "required": [
-            "assets"
-          ],
-          "properties": {
-            "assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Item Asset Definitions. It doesn't require any fields.",
-          "required": [
-            "item_assets"
-          ],
-          "properties": {
-            "item_assets": {
-              "type": "object",
-              "not": {
-                "additionalProperties": {
-                  "not": {
-                    "allOf": [
-                      {
-                        "$ref": "#/definitions/require_any_field"
-                      },
-                      {
-                        "$ref": "#/definitions/fields"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        {
-          "$comment": "This is the schema for the fields in Summaries. By default, only checks the existance of the properties, but not the schema of the summaries.",
-          "required": [
-            "summaries"
-          ],
-          "properties": {
-            "summaries": {
-              "$ref": "#/definitions/require_any_field"
-            }
-          }
-        }
-      ]
-    }
+  "$id": "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json#",
+  "title": "Web Map Links Extension",
+  "description": "STAC Web Map Links Extension for STAC Items, STAC Catalogs and STAC Collections.",
+  "type": "object",
+  "required": [
+    "stac_extensions",
+    "type",
+    "links"
   ],
-  "definitions": {
+  "properties": {
     "stac_extensions": {
-      "type": "object",
-      "required": [
-        "stac_extensions"
-      ],
-      "properties": {
-        "stac_extensions": {
-          "type": "array",
-          "contains": {
-            "const": "https://stac-extensions.github.io/template/v1.0.0/schema.json"
-          }
-        }
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json"
       }
     },
-    "require_any_field": {
-      "$comment": "Please list all fields here so that we can force the existance of one of them in other parts of the schemas.",
-      "anyOf": [
-        {"required": ["template:new_field"]},
-        {"required": ["template:xyz"]},
-        {"required": ["template:another_one"]}
+    "type": {
+      "type": "string",
+      "enum": [
+        "Catalog",
+        "Collection",
+        "Feature"
       ]
     },
-    "fields": {
-      "$comment": "Add your new fields here. Don't require them here, do that above in the corresponding schema.",
-      "type": "object",
-      "properties": {
-        "template:new_field": {
-          "type": "string"
-        },
-        "template:xyz": {
-          "type": "object",
-          "required": [
-            "x",
-            "y",
-            "z"
-          ],
-          "properties": {
-            "x": {
-              "type": "number"
+    "links": {
+      "type": "array",
+      "contains": {
+        "type": "object",
+        "required": [
+          "rel"
+        ],
+        "properties": {
+          "rel": {
+            "enum": [
+              "xyz",
+              "wmts"
+            ]
+          }
+        }
+      },
+      "items": {
+        "type": "object",
+        "allOf": [
+          {
+            "$comment": "Defines XYZ links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "xyz"
+                }
+              }
             },
-            "y": {
-              "type": "number"
+            "then": {
+              "if": {
+                "properties": {
+                  "href": {
+                    "pattern": "\\{s\\}"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "xyz:servers"
+                ],
+                "properties": {
+                  "xyz:servers": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "else": {
+                "properties": {
+                  "xyz:servers": {
+                    "not": {}
+                  }
+                }
+              }
+            }
+          },
+          {
+            "$comment": "Defines WMTS links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "wmts"
+                }
+              }
             },
-            "z": {
-              "type": "number"
+            "then": {
+              "required": [
+                "wmts:layer"
+              ],
+              "properties": {
+                "wmts:layer": {
+                  "type": [
+                    "string",
+                    "array"
+                  ],
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "wmts:dimensions": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
-        },
-        "template:another_one": {
-          "type": "array",
-          "items": {
-            "type": "number"
-          }
-        }
-      },
-      "patternProperties": {
-        "^(?!template:)": {
-          "$comment": "Above, change `template` to the prefix of this extension"
-        }
-      },
-      "additionalProperties": false
+        ]
+      }
     }
   }
 }

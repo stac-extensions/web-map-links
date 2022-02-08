@@ -1,7 +1,7 @@
 {
-  "stac_version": "1.0.0-rc.1",
+  "stac_version": "1.0.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/template/v1.0.0/schema.json"
+    "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json"
   ],
   "type": "Feature",
   "id": "item",
@@ -56,6 +56,20 @@
     {
       "href": "https://example.com/examples/item.json",
       "rel": "self"
+    },
+    {
+      "href": "https://maps.example.com/wmts",
+      "rel": "wmts",
+      "title": "RGB composite visualized through a WMTS",
+      "wmts:layer": [
+        "streets",
+        "satellite"
+      ]
+    },
+    {
+      "href": "https://maps.example.com/xyz/{z}/{x}/{y}",
+      "rel": "xyz",
+      "title": "RGB composite visualized through a XYZ"
     }
   ],
   "assets": {

@@ -1,14 +1,15 @@
-# Template Extension Specification
+# Web Map Links Extension Specification
 
-- **Title:** Template
-- **Identifier:** <https://stac-extensions.github.io/template/v1.0.0/schema.json>
-- **Field Name Prefix:** template
-- **Scope:** Item, Collection
+- **Title:** Web Map Links
+- **Identifier:** <https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json>
+- **Field Name Prefix:** none, but each relation type has potentially a distinct prefix for additional data (e.g. `wmts`)
+- **Scope:** Item, Catalog, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
-- **Owner**: @your-gh-handles @person2
+- **Owner**: @m-mohr
 
-This document explains the Template Extension to the [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-This is the place to add a short introduction.
+This document explains the Web Map Links Extension to the
+[SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
+It allows to provide links to web maps for visualization purposes. Currently, OGC WMTS and XYZ are supported.
 
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
@@ -16,38 +17,32 @@ This is the place to add a short introduction.
 - [JSON Schema](json-schema/schema.json)
 - [Changelog](./CHANGELOG.md)
 
-## Item Properties and Collection Fields
+## Link Object Fields
 
-| Field Name           | Type                      | Description |
-| -------------------- | ------------------------- | ----------- |
-| template:new_field   | string                    | **REQUIRED**. Describe the required field... |
-| template:xyz         | [XYZ Object](#xyz-object) | Describe the field... |
-| template:another_one | \[number]                 | Describe the field... |
+This extension only extends the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
+used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the 
+Link Object.
 
-### Additional Field Information
+### OGC WMTS
 
-#### template:new_field
+Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS) implementation (versions 1.x).
 
-This is a much more detailed description of the field `template:new_field`...
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `wmts`. |
+| href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
+| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names or a single layer name. |
+| wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request, usually added as query parameters. |
 
-### XYZ Object
+### XYZ
 
-This is the introduction for the purpose and the content of the XYZ Object...
+Links to a XYZ, also known as slippy map.
 
-| Field Name  | Type   | Description |
-| ----------- | ------ | ----------- |
-| x           | number | **REQUIRED**. Describe the required field... |
-| y           | number | **REQUIRED**. Describe the required field... |
-| z           | number | **REQUIRED**. Describe the required field... |
-
-## Relation types
-
-The following types should be used as applicable `rel` types in the
-[Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object).
-
-| Type                | Description |
-| ------------------- | ----------- |
-| fancy-rel-type      | This link points to a fancy resource. |
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `xyz`. |
+| href            | string               | **REQUIRED**. Link to the XYZ as a templates URI. MUST include the following placeholders: `{x}`, `{y}` and `{z}`. MAY include a placeholder for the server: `{s}` |
+| xyz:servers     | array                | REQUIRED if `{s}` is used in the `href`. A list of allowed values for the placeholder `{s}`. |
 
 ## Contributing
 

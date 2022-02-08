@@ -16,4 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-[Unreleased]: <https://github.com/stac-extensions/template/compare/v1.0.0...HEAD>
+## [1.0.0]
+
+- Initial release for WMTS and XYZ.
+
+[Unreleased]: <https://github.com/stac-extensions/web-map-links/compare/v1.0.0...HEAD>
+[1.0.0]: <https://github.com/stac-extensions/web-map-links/tree/v1.0.0>
