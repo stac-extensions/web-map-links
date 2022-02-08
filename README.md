@@ -2,7 +2,7 @@
 
 - **Title:** Web Map Links
 - **Identifier:** <https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json>
-- **Field Name Prefix:** none, but each relation type has potentially a distinct prefix for additional data (e.g. `wmts`)
+- **Field Name Prefix:** none, but each relation type has potentially a distinct prefix for additional data (e.g. `wmts` and `xyz`)
 - **Scope:** Item, Catalog, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
 - **Owner**: @m-mohr
@@ -23,6 +23,10 @@ This extension only extends the [Link Object](https://github.com/radiantearth/st
 used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the 
 Link Object.
 
+An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
+in the top-level object of the document via the `attribution` field as defined in
+[OGC API - Commons - Part 1](http://docs.ogc.org/DRAFTS/19-072.html#landing-page).
+
 ### OGC WMTS
 
 Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS) implementation (versions 1.x).
@@ -32,7 +36,7 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | rel             | string               | **REQUIRED**. Must be set to `wmts`. |
 | href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
 | wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names or a single layer name. |
-| wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request, usually added as query parameters. |
+| wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
 
 ### XYZ
 

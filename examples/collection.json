@@ -28,6 +28,7 @@
       ]
     }
   },
+  "attribution": "&copy; 2022 The Example Corp.",
   "links": [
     {
       "href": "https://example.com/examples/collection.json",
