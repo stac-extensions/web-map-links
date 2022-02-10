@@ -39,18 +39,7 @@
     ]
   },
   "properties": {
-    "datetime": "2020-12-11T22:38:32Z",
-    "template:new_field": "test",
-    "template:xyz": {
-      "x": 1,
-      "y": 2,
-      "z": 3
-    },
-    "template:another_one": [
-      1,
-      2,
-      3
-    ]
+    "datetime": "2020-12-11T22:38:32Z"
   },
   "attribution": "&copy; 2022 The Example Corp.",
   "links": [
@@ -75,8 +64,6 @@
   ],
   "assets": {
     "data": {
-      "href": "https://example.com/examples/file.xyz",
-      "template:new_field": "test"
     }
   }
 }
