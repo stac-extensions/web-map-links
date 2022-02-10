@@ -57,5 +57,15 @@
         "c"
       ]
     }
-  ]
+  ],
+  "assets": {
+    "tiles": {
+      "title": "TileJSON",
+      "href": "https://maps.example.com/colleciton/tilejson.json",
+      "type": "application/json",
+      "roles": [
+        "tiles"
+      ]
+    }
+  }
 }

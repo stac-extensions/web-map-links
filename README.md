@@ -19,8 +19,8 @@ It allows to provide links to web maps for visualization purposes. Currently, OG
 
 ## Link Object Fields
 
-This extension only extends the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
-used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the 
+This extension can extend the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
+used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the
 Link Object.
 
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
@@ -31,22 +31,34 @@ in the top-level object of the document via the `attribution` field as defined i
 
 Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS) implementation (versions 1.x).
 
-| Field Name      | Type                 | Description |
-| --------------- | -------------------- | ----------- |
-| rel             | string               | **REQUIRED**. Must be set to `wmts`. |
-| href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
-| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names or a single layer name. |
+| Field Name      | Type                 | Description                                                                                                      |
+| --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| rel             | string               | **REQUIRED**. Must be set to `wmts`.                                                                             |
+| href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters.                                      |
+| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names or a single layer name.                |
 | wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
 
 ### XYZ
 
 Links to a XYZ, also known as slippy map.
 
-| Field Name      | Type                 | Description |
-| --------------- | -------------------- | ----------- |
-| rel             | string               | **REQUIRED**. Must be set to `xyz`. |
-| href            | string               | **REQUIRED**. Link to the XYZ as a templates URI. MUST include the following placeholders: `{x}`, `{y}` and `{z}`. MAY include a placeholder for the server: `{s}` |
-| xyz:servers     | array                | REQUIRED if `{s}` is used in the `href`. A list of allowed values for the placeholder `{s}`. |
+| Field Name  | Type   | Description                                                                                                                                                        |
+| ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| rel         | string | **REQUIRED**. Must be set to `xyz`.                                                                                                                                |
+| href        | string | **REQUIRED**. Link to the XYZ as a templates URI. MUST include the following placeholders: `{x}`, `{y}` and `{z}`. MAY include a placeholder for the server: `{s}` |
+| xyz:servers | array  | REQUIRED if `{s}` is used in the `href`. A list of allowed values for the placeholder `{s}`.                                                                       |
+
+## Asset Object Fields
+
+In addition to the above link extensions,
+[Asset Objects](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#asset-object)
+can specify a specific role that links to a [TileJSON](https://github.com/mapbox/tilejson-spec) document.
+
+| Field Name | Type       | Description                                        |
+| ---------- | ---------- | -------------------------------------------------- |
+| roles      | `[string]` | **REQUIRED**. Must include `tiles` as a role.      |
+| href       | ``string   | **REQUIRED**. Link to the valid TileJSON document. |
+| type       | `string`   | RECOMMENDED to be set to `application/json`        |
 
 ## Contributing
 
@@ -58,10 +70,10 @@ for running tests are copied here for convenience.
 
 ### Running tests
 
-The same checks that run as checks on PR's are part of the repository and can be run locally to verify that changes are valid. 
+The same checks that run as checks on PR's are part of the repository and can be run locally to verify that changes are valid.
 To run tests locally, you'll need `npm`, which is a standard part of any [node.js installation](https://nodejs.org/en/download/).
 
-First you'll need to install everything with npm once. Just navigate to the root of this repository and on 
+First you'll need to install everything with npm once. Just navigate to the root of this repository and on
 your command line run:
 ```bash
 npm install
