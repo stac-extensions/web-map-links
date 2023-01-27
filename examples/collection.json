@@ -51,7 +51,7 @@
       "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}",
       "rel": "xyz",
       "title": "RGB composite visualized through a XYZ",
-      "xyz:servers": [
+      "href:servers": [
         "a",
         "b",
         "c"

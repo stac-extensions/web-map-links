@@ -35,8 +35,17 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wmts`. |
 | href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
-| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names or a single layer name. |
+| href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
+| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map by default, either a list of layer names or a single layer name. |
 | wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
+
+#### href
+
+For WMTS, the `href` is pointing to the URL of the Capabilities document, but without the query parameters for the Capabilities request.
+So if your Capabilities can be requested from `https://example.com/geoserver/service/wmts?service=wmts&request=GetCapabilities`
+you'd provide `https://example.com/geoserver/service/wmts` as `href`.
+
+The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
 
 ### XYZ
 
@@ -45,8 +54,38 @@ Links to a XYZ, also known as slippy map.
 | Field Name      | Type                 | Description |
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `xyz`. |
-| href            | string               | **REQUIRED**. Link to the XYZ as a templates URI. MUST include the following placeholders: `{x}`, `{y}` and `{z}`. MAY include a placeholder for the server: `{s}` |
-| xyz:servers     | array                | REQUIRED if `{s}` is used in the `href`. A list of allowed values for the placeholder `{s}`. |
+| href            | string               | **REQUIRED**. Link to the XYZ as a templated URI. |
+| href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
+
+#### href
+
+For XYZ, the `href` is a templated URI.
+It MUST include the following placeholders: `{x}`, `{y}` and `{z}` and MAY include a placeholder for the server: `{s}`.
+If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
+All other parameters should be [hard-coded](https://github.com/stac-extensions/web-map-links/issues/2) with specific values,
+e.g. the `{r}` parameter in Leaflet could be replaced by `2x`.
+
+### General
+
+The following field applies to multiple types of web mapping services:
+
+| Field Name   | Type      | Description |
+| ------------ | --------- | ----------- |
+| href:servers | \[string] | A list of replacement values for `{s}` in `href`s. |
+
+#### href:servers
+
+This field is used to specify a set of URLs for a web mapping library so that requests can be sent to multiple servers,
+which can avoid request limits in web browsers.
+
+The field is used across multiple types of web mapping services and applies currently to XYZ and WMTS.
+
+It is **REQUIRED** if `{s}` is used in the `href` and then a list of at least 2 allowed values for the placeholder `{s}` must be provided.
+If you only have a single value don't provide `href:servers` and instead hard-code the value into the href.
+
+The implementations can expand the given values into multiple URLs.
+For example, if you provide `https://{s}/example` as `href` and `href:servers` is `["a.com", "b.eu"]`
+you can expand that to `["https://a.com/example", "https://b.eu/example"]`.
 
 ## Contributing
 
