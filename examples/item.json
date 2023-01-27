@@ -67,5 +67,6 @@
       "title": "TileJSON",
       "type": "application/json"
     }
-  ]
+  ],
+  "assets": {}
 }
