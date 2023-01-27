@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json#",
+  "title": "Web Map Links Extension",
+  "description": "STAC Web Map Links Extension for STAC Items, STAC Catalogs and STAC Collections.",
+  "type": "object",
+  "required": [
+    "stac_extensions",
+    "type",
+    "links"
+  ],
+  "properties": {
+    "stac_extensions": {
+      "type": "array",
+      "contains": {
+        "const": "https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json"
+      }
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Catalog",
+        "Collection",
+        "Feature"
+      ]
+    },
+    "links": {
+      "type": "array",
+      "contains": {
+        "type": "object",
+        "required": [
+          "rel"
+        ],
+        "properties": {
+          "rel": {
+            "enum": [
+              "xyz",
+              "wmts"
+            ]
+          }
+        }
+      },
+      "items": {
+        "type": "object",
+        "allOf": [
+          {
+            "$comment": "Defines XYZ links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "xyz"
+                }
+              }
+            },
+            "then": {
+              "$ref": "#/definitions/servers"
+            }
+          },
+          {
+            "$comment": "Defines WMTS links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "wmts"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "wmts:layer"
+              ],
+              "properties": {
+                "wmts:layer": {
+                  "type": [
+                    "string",
+                    "array"
+                  ],
+                  "minItems": 1,
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "wmts:dimensions": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              },
+              "allOf": [
+                {
+                  "$ref": "#/definitions/servers"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "servers": {
+      "if": {
+        "required": [
+          "href"
+        ],
+        "properties": {
+          "href": {
+            "pattern": "\\{s\\}"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "href:servers"
+        ],
+        "properties": {
+          "href:servers": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "href:servers": {
+            "not": {}
+          }
+        }
+      }
+    }
+  }
+}
