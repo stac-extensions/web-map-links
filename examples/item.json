@@ -60,19 +60,12 @@
       "href": "https://maps.example.com/xyz/{z}/{x}/{y}",
       "rel": "xyz",
       "title": "RGB composite visualized through a XYZ"
-    }
-  ],
-  "assets": {
-    "data": {
-      "href": "https://example.com/examples/file.xyz"
     },
-    "tiles": {
-      "title": "TileJSON",
+    {
       "href": "https://maps.example.com/item/tilejson.json",
-      "type": "application/json",
-      "roles": [
-        "tiles"
-      ]
+      "rel": "tilejson",
+      "title": "TileJSON",
+      "type": "application/json"
     }
-  }
+  ]
 }

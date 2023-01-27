@@ -19,7 +19,7 @@ It allows to provide links to web maps for visualization purposes. Currently, OG
 
 ## Link Object Fields
 
-This extension can extend the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
+This extension only extends the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
 used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the
 Link Object.
 
@@ -56,6 +56,7 @@ Links to a XYZ, also known as slippy map.
 | rel             | string               | **REQUIRED**. Must be set to `xyz`. |
 | href            | string               | **REQUIRED**. Link to the XYZ as a templated URI. |
 | href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
+
 #### href
 
 For XYZ, the `href` is a templated URI.

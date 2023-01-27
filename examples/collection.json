@@ -56,16 +56,12 @@
         "b",
         "c"
       ]
-    }
-  ],
-  "assets": {
-    "tiles": {
+    },
+    {
+      "href": "https://maps.example.com/collection/tilejson.json",
+      "rel": "tilejson",
       "title": "TileJSON",
-      "href": "https://maps.example.com/colleciton/tilejson.json",
-      "type": "application/json",
-      "roles": [
-        "tiles"
-      ]
+      "type": "application/json"
     }
-  }
+  ]
 }
