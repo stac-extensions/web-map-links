@@ -9,8 +9,14 @@
 
 This document explains the Web Map Links Extension to the
 [SpatioTemporal Asset Catalog](https://github.com/radiantearth/stac-spec) (STAC) specification.
-It allows to provide links to web maps for visualization purposes. Currently, OGC WMTS and XYZ are supported.
+It allows to provide links to web map services for visualization purposes.
 
+The following services are supported:
+- [OGC WMTS](#ogc-wmts)
+- [TileJSON](#tilejson)
+- [XYZ](#xyz)
+
+Important resources in this extension:
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
   - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
@@ -35,6 +41,7 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wmts`. |
 | href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
+| type            | string               | Recommended to be set to the media type the Capabilities document, usually `application/xml`. |
 | href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
 | wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map by default, either a list of layer names or a single layer name. |
 | wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
@@ -51,11 +58,12 @@ The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, t
 
 Links to a XYZ, also known as slippy map.
 
-| Field Name      | Type                 | Description |
-| --------------- | -------------------- | ----------- |
-| rel             | string               | **REQUIRED**. Must be set to `xyz`. |
-| href            | string               | **REQUIRED**. Link to the XYZ as a templated URI. |
-| href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
+| Field Name   | Type      | Description |
+| ------------ | --------- | ----------- |
+| rel          | string    | **REQUIRED**. Must be set to `xyz`. |
+| href         | string    | **REQUIRED**. Link to the XYZ as a templated URI. |
+| type         | string    | Recommended to be set to the image file type the XYZ returns by default, usually `image/png` or `image/jpeg`. |
+| href:servers | \[string] | See [href:servers](#hrefservers) below for details. |
 
 #### href
 
@@ -69,11 +77,11 @@ e.g. the `{r}` parameter in Leaflet could be replaced by `2x`.
 
 Links to a [TileJSON](https://github.com/mapbox/tilejson-spec) document.
 
-| Field Name | Type       | Description                                        |
-| ---------- | ---------- | -------------------------------------------------- |
-| rel             | string               | **REQUIRED**. Must be set to `tilejson`. |
-| href       | ``string   | **REQUIRED**. Link to the valid TileJSON document. |
-| type       | `string`   | RECOMMENDED to be set to `application/json`        |
+| Field Name | Type   | Description |
+| ---------- | ------ | ----------- |
+| rel        | string | **REQUIRED**. Must be set to `tilejson`. |
+| href       | string | **REQUIRED**. Link to the valid TileJSON document. |
+| type       | string | Recommended to be set to `application/json` |
 
 ### General
 

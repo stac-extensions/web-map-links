@@ -41,6 +41,7 @@
     {
       "href": "https://maps.example.com/wmts",
       "rel": "wmts",
+      "type": "application/xml",
       "title": "RGB composite visualized through a WMTS",
       "wmts:layer": "rgb",
       "wmts:dimensions": {
@@ -48,8 +49,9 @@
       }
     },
     {
-      "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}",
+      "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}.png",
       "rel": "xyz",
+      "type": "image/png",
       "title": "RGB composite visualized through a XYZ",
       "href:servers": [
         "a",
