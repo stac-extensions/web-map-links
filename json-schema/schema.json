@@ -35,7 +35,8 @@
           "rel": {
             "enum": [
               "xyz",
-              "wmts"
+              "wmts",
+              "tilejson"
             ]
           }
         }

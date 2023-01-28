@@ -50,6 +50,7 @@
     {
       "href": "https://maps.example.com/wmts",
       "rel": "wmts",
+      "type": "application/xml",
       "title": "RGB composite visualized through a WMTS",
       "wmts:layer": [
         "streets",
@@ -57,14 +58,17 @@
       ]
     },
     {
-      "href": "https://maps.example.com/xyz/{z}/{x}/{y}",
+      "href": "https://maps.example.com/xyz/{z}/{x}/{y}.jpg",
       "rel": "xyz",
+      "type": "image/jpeg",
       "title": "RGB composite visualized through a XYZ"
+    },
+    {
+      "href": "https://maps.example.com/item/tilejson.json",
+      "rel": "tilejson",
+      "title": "TileJSON",
+      "type": "application/json"
     }
   ],
-  "assets": {
-    "data": {
-      "href": "https://example.com/examples/file.xyz"
-    }
-  }
+  "assets": {}
 }
