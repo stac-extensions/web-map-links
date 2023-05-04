@@ -12,11 +12,13 @@ This document explains the Web Map Links Extension to the
 It allows to provide links to web map services for visualization purposes.
 
 The following services are supported:
+
 - [OGC WMTS](#ogc-wmts)
 - [TileJSON](#tilejson)
 - [XYZ](#xyz)
 
 Important resources in this extension:
+
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
   - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
@@ -104,6 +106,21 @@ If you only have a single value don't provide `href:servers` and instead hard-co
 The implementations can expand the given values into multiple URLs.
 For example, if you provide `https://{s}/example` as `href` and `href:servers` is `["a.com", "b.eu"]`
 you can expand that to `["https://a.com/example", "https://b.eu/example"]`.
+
+#### Reference placeholders
+
+The following placeholders can be used to reference a STAC Item in the current STAC catalog.
+
+| Placeholder   | Reference            | Description |
+| ------------- | -------------------- | ----------- |
+| `{item.id}`   | [Stac Item identifier](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#id) | Unique Item identifier within a Collection |
+| `{item.self}` | [Stac Item self url](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#relation-types) | Absolute URL to the Item |
+| `{col.id}`    | [Stac Collection Id](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#collections) | Collection identifier |
+| `{asset}`     | [Stac Item asset key](https://github.com/radiantearth/stac-spec/blob/master/item-spec/item-spec.md#asset-object) | Asset key |
+
+For example, if you provide `https://maps.example.com/xyz/{z}/{x}/{y}.jpg?url={item.self}&assets={asset}` 
+or `https://maps.example.com/xyz/{z}/{x}/{y}.jpg?url=https://api.example.com/collections/{col.id}/items/{item.id}&assets={asset}`,
+you can expand that to `https://maps.example.com/xyz/1/2/3.jpg?url=https://api.example.com/collections/my-collection/items/my-item&assets=rgb`.
 
 ## Contributing
 
