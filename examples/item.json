@@ -64,6 +64,12 @@
       "title": "RGB composite visualized through a XYZ"
     },
     {
+      "href": "https://maps.example.com/stac-xyz/{z}/{x}/{y}.png?url={item.self}&assets={asset}",
+      "rel": "xyz",
+      "type": "image/jpeg",
+      "title": "RGB composite visualized through a XYZ"
+    },
+    {
       "href": "https://maps.example.com/item/tilejson.json",
       "rel": "tilejson",
       "title": "TileJSON",
