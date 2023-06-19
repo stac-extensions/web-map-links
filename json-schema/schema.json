@@ -36,7 +36,8 @@
             "enum": [
               "xyz",
               "wmts",
-              "tilejson"
+              "tilejson",
+              "3d-tiles"
             ]
           }
         }
