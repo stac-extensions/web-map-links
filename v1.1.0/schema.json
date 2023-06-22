@@ -35,6 +35,7 @@
           "rel": {
             "enum": [
               "xyz",
+              "wms",
               "wmts",
               "tilejson",
               "3d-tiles"
