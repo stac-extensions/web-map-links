@@ -68,6 +68,12 @@
       "rel": "tilejson",
       "title": "TileJSON",
       "type": "application/json"
+    },
+    {
+      "href": "https://storage.googleapis.com/open-cogs/planet-stac/cocabamba-peru/3d-geofox.ai/3DTiles/tileset.json",
+      "rel": "3d-tiles",
+      "title": "3D Tiles",
+      "type": "application/json"
     }
   ],
   "assets": {}
