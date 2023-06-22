@@ -1,7 +1,7 @@
 # Web Map Links Extension Specification
 
 - **Title:** Web Map Links
-- **Identifier:** <https://stac-extensions.github.io/web-map-links/v1.0.0/schema.json>
+- **Identifier:** <https://stac-extensions.github.io/web-map-links/v1.1.0/schema.json>
 - **Field Name Prefix:** none, but each relation type has potentially a distinct prefix for additional data (e.g. `wmts` and `xyz`)
 - **Scope:** Item, Catalog, Collection
 - **Extension [Maturity Classification](https://github.com/radiantearth/stac-spec/tree/master/extensions/README.md#extension-maturity):** Proposal
