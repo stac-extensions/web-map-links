@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added OGC WMS (Basic WMS only)
+- OGC WMS (Basic WMS only)
+- 3D Tiles
 
 ### Changed
 
@@ -20,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0]
 
-- Initial release for WMTS and XYZ.
+- Initial release for TileJSON, WMTS and XYZ.
 
 [Unreleased]: <https://github.com/stac-extensions/web-map-links/compare/v1.0.0...HEAD>
 [1.0.0]: <https://github.com/stac-extensions/web-map-links/tree/v1.0.0>

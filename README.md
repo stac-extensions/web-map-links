@@ -12,6 +12,7 @@ This document explains the Web Map Links Extension to the
 It allows to provide links to web map services for visualization purposes.
 
 The following services are supported:
+- [3D Tiles](#3d-tiles)
 - [OGC WMS](#ogc-wms)
 - [OGC WMTS](#ogc-wmts)
 - [TileJSON](#tilejson)
@@ -33,6 +34,16 @@ Link Object.
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
 in the top-level object of the document via the `attribution` field as defined in
 [OGC API - Commons - Part 1](http://docs.ogc.org/DRAFTS/19-072.html#landing-page).
+
+### 3D Tiles
+
+Links to a [3D Tiles](https://docs.ogc.org/cs/18-053r2/18-053r2.html) implementation (versions 1.x).
+
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `3d-tiles`. |
+| href            | string               | **REQUIRED**. Link to a tileset. |
+| type            | string               | Recommended to be set to `application/json`. |
 
 ### OGC WMS
 
@@ -96,7 +107,7 @@ Links to a [TileJSON](https://github.com/mapbox/tilejson-spec) document.
 | ---------- | ------ | ----------- |
 | rel        | string | **REQUIRED**. Must be set to `tilejson`. |
 | href       | string | **REQUIRED**. Link to the valid TileJSON document. |
-| type       | string | Recommended to be set to `application/json` |
+| type       | string | Recommended to be set to `application/json`. |
 
 ### General
 
