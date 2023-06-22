@@ -58,6 +58,15 @@
       ]
     },
     {
+      "href": "https://maps.example.com/wms",
+      "rel": "wms",
+      "type": "text/xml",
+      "title": "RGB composite visualized through a WMS",
+      "wms:layers": [
+        "rgb"
+      ]
+    },
+    {
       "href": "https://maps.example.com/xyz/{z}/{x}/{y}.jpg",
       "rel": "xyz",
       "type": "image/jpeg",

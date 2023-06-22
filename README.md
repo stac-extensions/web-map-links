@@ -13,6 +13,7 @@ It allows to provide links to web map services for visualization purposes.
 
 The following services are supported:
 - [3D Tiles](#3d-tiles)
+- [OGC WMS](#ogc-wms)
 - [OGC WMTS](#ogc-wmts)
 - [TileJSON](#tilejson)
 - [XYZ](#xyz)
@@ -43,6 +44,20 @@ Links to a [3D Tiles](https://docs.ogc.org/cs/18-053r2/18-053r2.html) implementa
 | rel             | string               | **REQUIRED**. Must be set to `3d-tiles`. |
 | href            | string               | **REQUIRED**. Link to a tileset. |
 | type            | string               | Recommended to be set to `application/json`. |
+
+### OGC WMS
+
+Links to a [OGC Web Map Service](https://www.ogc.org/standards/wms) (WMS) implementation (versions 1.x).
+Only (tiled) "Basic WMS" is supported at this time.
+
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `wms`. |
+| href            | string               | **REQUIRED**. Link to the WMS, without any WMS specific query parameters. |
+| type            | string               | Recommended to be set to the media type the Capabilities document, usually `text/xml`. |
+| wms:layers      | \[string]            | **REQUIRED**. The layers to show on the map by default. Can't be empty. |
+| wms:styles      | \[string]            | The styles to show on the map by default. If not provided or empty, an empty string will be used for the query parameter. |
+| wms:dimensions  | Map\<string, string> | Any additional dimension parameters to add to the request as query parameters (e.g. the dimensions `TIME` or `ELEVATION`). |
 
 ### OGC WMTS
 
