@@ -12,6 +12,7 @@ This document explains the Web Map Links Extension to the
 It allows to provide links to web map services for visualization purposes.
 
 The following services are supported:
+- [OGC WMS](#ogc-wms)
 - [OGC WMTS](#ogc-wmts)
 - [TileJSON](#tilejson)
 - [XYZ](#xyz)
@@ -32,6 +33,20 @@ Link Object.
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
 in the top-level object of the document via the `attribution` field as defined in
 [OGC API - Commons - Part 1](http://docs.ogc.org/DRAFTS/19-072.html#landing-page).
+
+### OGC WMS
+
+Links to a [OGC Web Map Service](https://www.ogc.org/standards/wms) (WMS) implementation (versions 1.x).
+Only (tiled) "Basic WMS" is supported at this time.
+
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `wms`. |
+| href            | string               | **REQUIRED**. Link to the WMS, without any WMS specific query parameters. |
+| type            | string               | Recommended to be set to the media type the Capabilities document, usually `text/xml`. |
+| wms:layers      | \[string]            | **REQUIRED**. The layers to show on the map by default. Can't be empty. |
+| wms:styles      | \[string]            | The styles to show on the map by default. If not provided or empty, an empty string will be used for the query parameter. |
+| wms:dimensions  | Map\<string, string> | Any additional dimension parameters to add to the request as query parameters (e.g. the dimensions `TIME` or `ELEVATION`). |
 
 ### OGC WMTS
 
