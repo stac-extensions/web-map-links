@@ -83,6 +83,15 @@
       "rel": "3d-tiles",
       "title": "3D Tiles",
       "type": "application/json"
+    },
+    {
+      "href": "https://maps.example.com/item/example.pmtiles",
+      "rel": "pmtiles",
+      "title": "PMTiles",
+      "type": "application/vnd.pmtiles",
+      "pmtiles:layers": [
+        "streets"
+      ]
     }
   ],
   "assets": {}
