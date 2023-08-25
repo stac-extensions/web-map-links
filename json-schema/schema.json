@@ -38,6 +38,7 @@
               "wms",
               "wmts",
               "tilejson",
+              "pmtiles",
               "3d-tiles"
             ]
           }
@@ -136,6 +137,27 @@
                   "type": "object",
                   "additionalProperties": {
                     "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "$comment": "Defines PMTiles links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "pmtiles"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "pmtiles:layers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
                   }
                 }
               }

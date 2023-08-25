@@ -15,6 +15,7 @@ The following services are supported:
 - [3D Tiles](#3d-tiles)
 - [OGC WMS](#ogc-wms)
 - [OGC WMTS](#ogc-wmts)
+- [PMTiles](#pmtiles)
 - [TileJSON](#tilejson)
 - [XYZ](#xyz)
 
@@ -79,6 +80,23 @@ So if your Capabilities can be requested from `https://example.com/geoserver/ser
 you'd provide `https://example.com/geoserver/service/wmts` as `href`.
 
 The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
+
+### PMTiles
+
+Links to a [PMTiles](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md) file (versions 3.x).
+
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `pmtiles`. |
+| href            | string               | **REQUIRED**. Link to a PMTiles file (usually ends with `.pmtiles`). |
+| type            | string               | Recommended to be set to `application/vnd.pmtiles`. |
+| pmtiles:layers  | \[string]            | For vector tiles, the layers to show on the map by default. If not provided, it's up to the discretion of the implementation to choose a layer from the `vector_layers` in the PMTiles metadata. |
+
+The [Tile Type](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md#tile-type-tt) of the
+PMTiles data source can be read from the first 127 bytes of the the binary header.
+
+It is typical to assume a tile size of 256x256 pixels for raster tiles and 512x512 pixels for vector tiles,
+but they could also be inferred from the first file.
 
 ### XYZ
 
