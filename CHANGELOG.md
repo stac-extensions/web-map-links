@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+## [1.2.0]
+
+### Added
+
+- PMTiles
+
 ## [1.1.0]
 
 ### Added
@@ -33,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release for TileJSON, WMTS and XYZ.
 
-[Unreleased]: <https://github.com/stac-extensions/web-map-links/compare/v1.1.0...HEAD>
+[Unreleased]: <https://github.com/stac-extensions/web-map-links/compare/v1.2.0...HEAD>
+[1.2.0]: <https://github.com/stac-extensions/web-map-links/compare/v1.1.0...v1.2.0>
 [1.1.0]: <https://github.com/stac-extensions/web-map-links/compare/v1.0.0...v1.1.0>
 [1.0.0]: <https://github.com/stac-extensions/web-map-links/tree/v1.0.0>
