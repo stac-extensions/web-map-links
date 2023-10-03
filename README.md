@@ -85,18 +85,72 @@ The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, t
 
 Links to a [PMTiles](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md) file (versions 3.x).
 
-| Field Name      | Type                 | Description |
-| --------------- | -------------------- | ----------- |
-| rel             | string               | **REQUIRED**. Must be set to `pmtiles`. |
-| href            | string               | **REQUIRED**. Link to a PMTiles file (usually ends with `.pmtiles`). |
-| type            | string               | Recommended to be set to `application/vnd.pmtiles`. |
-| pmtiles:layers  | \[string]            | For vector tiles, the layers to show on the map by default. If not provided, it's up to the discretion of the implementation to choose a layer from the `vector_layers` in the PMTiles metadata. |
+| Field Name               | Type                                           | Description |
+| ------------------------ | ---------------------------------------------- | ----------- |
+| rel                      | string                                         | **REQUIRED**. Must be set to `pmtiles`. |
+| href                     | string                                         | **REQUIRED**. Link to a PMTiles file (usually ends with `.pmtiles`). |
+| type                     | string                                         | Recommended to be set to `application/vnd.pmtiles`. |
+| pmtiles:layers           | \[string]                                      | For vector tiles, the layers to show on the map by default. If not provided, it's up to the discretion of the implementation to choose a layer from the `vector_layers` in the PMTiles metadata. |
+| pmtiles:layer_properties | Map\<string, Map\<string, JSON Schema Object>> | For vector tiles, the properties/fields available for each layer and their corresponding [JSON Schema](#json-schema-object) as an object. |
 
 The [Tile Type](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md#tile-type-tt) of the
 PMTiles data source can be read from the first 127 bytes of the the binary header.
 
 It is typical to assume a tile size of 256x256 pixels for raster tiles and 512x512 pixels for vector tiles,
 but they could also be inferred from the first file.
+
+#### pmtiles:layer_properties
+
+Assuming the PMTiles file has a single layer `roads` with the following fields:
+- `type` - a string with one of the following values: trunk, primary, secondary
+- `lanes` - an integer with numbers between 1 and 10
+- `name` - a free-form text
+- `sidewalks` - a boolean value
+
+The `pmtiles:layer_properties` value could be the following object:
+```json
+{
+  "roads": {
+    "type": {
+      "title": "Road Type",
+      "type": "string",
+      "enum": [
+        "trunk",
+        "primary",
+        "secondary"
+      ]
+    },
+    "lanes": {
+      "title": "Number of Lanes",
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "name": {
+      "title": "Road Name",
+      "type": "string"
+    },
+    "sidewalks": {
+      "title": "Has Sidewalks",
+      "type": "boolean"
+    }
+  }
+}
+```
+
+The layer names (top-level keys) and property names (second level keys) must correcspond exactly to
+the information provided in the `vector_layers` in the PMTiles metadata.
+
+##### JSON Schema Object
+
+Each schema must be valid against all corresponding values available for the property.
+Empty schemas are discouraged.
+
+JSON Schema draft-07 is the only officially supported JSON Schema version to align with the JSON Schemas provided by STAC.
+Validation uses the JSON Schema meta-schema for draft-07.
+It is allowed to use you use other versions of JSON Schema, but they may not get validated properly.
+
+For an introduction to JSON Schema, see "[Learn JSON Schema](https://json-schema.org/learn/)".
 
 ### XYZ
 

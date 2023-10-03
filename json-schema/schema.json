@@ -159,6 +159,15 @@
                     "type": "string",
                     "minLength": 1
                   }
+                },
+                "pmtiles:layer_properties": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "$ref": "http://json-schema.org/draft-07/schema"
+                    }
+                  }
                 }
               }
             }
