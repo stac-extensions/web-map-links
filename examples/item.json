@@ -91,7 +91,34 @@
       "type": "application/vnd.pmtiles",
       "pmtiles:layers": [
         "streets"
-      ]
+      ],
+      "pmtiles:layer_properties": {
+        "streets": {
+          "type": {
+            "title": "Street Type",
+            "type": "string",
+            "enum": [
+              "trunk",
+              "primary",
+              "secondary"
+            ]
+          },
+          "lanes": {
+            "title": "Number of Lanes",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "name": {
+            "title": "Street Name",
+            "type": "string"
+          },
+          "sidewalks": {
+            "title": "Has Sidewalks",
+            "type": "boolean"
+          }
+        }
+      }
     }
   ],
   "assets": {}
