@@ -138,7 +138,7 @@ The `pmtiles:layer_properties` value could be the following object:
 }
 ```
 
-The layer names (top-level keys) and property names (second level keys) must correcspond exactly to
+The layer names (top-level keys) and property names (second level keys) must correspond exactly to
 the information provided in the `vector_layers` in the PMTiles metadata.
 
 ##### JSON Schema Object
