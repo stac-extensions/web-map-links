@@ -95,8 +95,8 @@ Links to a [PMTiles](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec
 The [Tile Type](https://github.com/protomaps/PMTiles/blob/main/spec/v3/spec.md#tile-type-tt) of the
 PMTiles data source can be read from the first 127 bytes of the the binary header.
 
-It is typical to assume a tile size of 256x256 pixels for raster tiles and 512x512 pixels for vector tiles,
-but they could also be inferred from the first file.
+It is typical to assume a tile size of 256x256 display (CSS) pixels for raster tiles and 512x512 display pixels for vector tiles.
+Tile sizes are not guaranteed to be uniform across an entire archive.
 
 ### XYZ
 
