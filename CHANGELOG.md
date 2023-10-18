@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The `type` for WMS and WMTS links should be set to the image media type that the client should request for tiles.
+
 ### Deprecated
 
 ### Removed

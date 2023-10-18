@@ -55,7 +55,7 @@ Only (tiled) "Basic WMS" is supported at this time.
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wms`. |
 | href            | string               | **REQUIRED**. Link to the WMS, without any WMS specific query parameters. |
-| type            | string               | Recommended to be set to the media type the Capabilities document, usually `text/xml`. |
+| type            | string               | The media type to be used for the tile requests, e.g. `image/png` or `image/jpeg`. |
 | wms:layers      | \[string]            | **REQUIRED**. The layers to show on the map by default. Can't be empty. |
 | wms:styles      | \[string]            | The styles to show on the map by default. If not provided or empty, an empty string will be used for the query parameter. |
 | wms:dimensions  | Map\<string, string> | Any additional dimension parameters to add to the request as query parameters (e.g. the dimensions `TIME` or `ELEVATION`). |
@@ -68,7 +68,7 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wmts`. |
 | href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
-| type            | string               | Recommended to be set to the media type the Capabilities document, usually `application/xml`. |
+| type            | string               | The media type to be used for the tile requests, e.g. `image/png` or `image/jpeg`. |
 | href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
 | wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map by default, either a list of layer names or a single layer name. |
 | wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |

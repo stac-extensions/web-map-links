@@ -50,7 +50,7 @@
     {
       "href": "https://maps.example.com/wmts",
       "rel": "wmts",
-      "type": "application/xml",
+      "type": "image/png",
       "title": "RGB composite visualized through a WMTS",
       "wmts:layer": [
         "streets",
@@ -60,7 +60,7 @@
     {
       "href": "https://maps.example.com/wms",
       "rel": "wms",
-      "type": "text/xml",
+      "type": "image/png",
       "title": "RGB composite visualized through a WMS",
       "wms:layers": [
         "rgb"
