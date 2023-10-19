@@ -138,6 +138,9 @@
                   "additionalProperties": {
                     "type": "string"
                   }
+                },
+                "wms:transparent": {
+                  "type": "boolean"
                 }
               }
             }

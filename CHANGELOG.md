@@ -9,16 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - PMTiles
+- New property `wms:transparent` for WMS
 
 ### Changed
 
 - The `type` for WMS and WMTS links should be set to the image media type that the client should request for tiles.
+- WMS supports only v1.3.0 of the specification
 
 ### Deprecated
 
 ### Removed
 
 ### Fixed
+
+- WMS: Clarified the behavior of `wms:layers` and `wms:styles`
 
 ## [1.2.0]
 

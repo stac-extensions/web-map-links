@@ -48,7 +48,7 @@ Links to a [3D Tiles](https://docs.ogc.org/cs/18-053r2/18-053r2.html) implementa
 
 ### OGC WMS
 
-Links to a [OGC Web Map Service](https://www.ogc.org/standards/wms) (WMS) implementation (versions 1.x).
+Links to a [OGC Web Map Service](https://www.ogc.org/standards/wms) (WMS) implementation (versions 1.3.0).
 Only (tiled) "Basic WMS" is supported at this time.
 
 | Field Name      | Type                 | Description |
@@ -59,6 +59,14 @@ Only (tiled) "Basic WMS" is supported at this time.
 | wms:layers      | \[string]            | **REQUIRED**. The layers to show on the map by default. Can't be empty. |
 | wms:styles      | \[string]            | The styles to show on the map by default. If not provided or empty, an empty string will be used for the query parameter. |
 | wms:dimensions  | Map\<string, string> | Any additional dimension parameters to add to the request as query parameters (e.g. the dimensions `TIME` or `ELEVATION`). |
+| wms:transparent | boolean              | Sets whether the layers should be rendered transparent or not. Default: `false` |
+
+If you provide multiple array elements in `wms:layers` (e.g. `["layerA", "layerB"]`),
+each should occur in a separate layer in the mapping library so that requests for the layers are sent.
+If you want to send multiple layers in a single request, provide them as a string with comma-separated values: `["layerA,layerB"]`.
+`wms:layers` and `wms:styles` work in parallel, so the first style in the array will be used for the first layer, etc.
+
+- [More details on the mapping between WMS query parameters and the STAC fields](./wms.md)
 
 ### OGC WMTS
 
@@ -72,6 +80,9 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
 | wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map by default, either a list of layer names or a single layer name. |
 | wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
+
+If you provide multiple array elements in `wmts:layer` (e.g. `["layerA", "layerB"]`),
+each should occur in a separate layer in the mapping library so that individual requests for the layers are sent.
 
 #### href
 

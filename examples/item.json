@@ -64,7 +64,8 @@
       "title": "RGB composite visualized through a WMS",
       "wms:layers": [
         "rgb"
-      ]
+      ],
+      "wms:transparent": true
     },
     {
       "href": "https://maps.example.com/xyz/{z}/{x}/{y}.jpg",
