@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- PMTiles
 - New property `wms:transparent` for WMS
+- Roles to specify the layer type, visibility and default layers.
 
 ### Changed
 
