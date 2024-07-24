@@ -33,8 +33,7 @@ used in all STAC entities (Catalogs, Collections, Items). It requires specific r
 Link Object.
 
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
-in the top-level object of the document (in the `properties` for Items) via the `attribution` field as defined in
-[OGC API - Commons - Part 1](http://docs.ogc.org/DRAFTS/19-072.html#landing-page).
+in via the `attribution` field as defined the [Attribtion Extension](https://github.com/stac-extensions/attribution).
 
 ### 3D Tiles
 
