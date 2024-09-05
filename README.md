@@ -30,7 +30,7 @@ Important resources in this extension:
 
 This extension only extends the [Link Object](https://github.com/radiantearth/stac-spec/tree/master/item-spec/item-spec.md#link-object)
 used in all STAC entities (Catalogs, Collections, Items). It requires specific relation types to be set for the `rel` field in the
-Link Object.
+Link Object and also allows to set specific `roles`.
 
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
 in via the `attribution` field as defined the [Attribtion Extension](https://github.com/stac-extensions/attribution).
@@ -143,7 +143,35 @@ The following field applies to multiple types of web mapping services:
 
 | Field Name   | Type      | Description |
 | ------------ | --------- | ----------- |
+| roles        | \[string] | A list of roles, see the list below. | 
 | href:servers | \[string] | A list of replacement values for `{s}` in `href`s. |
+
+#### roles
+
+Several roles can be assigned that provide an indicator for the web map library how to handle the link.
+
+**One of** the following roles may bet set to describe the type of layer. 
+If no role is provided, `data` is assumed to be the default.
+
+| Role    | Description |
+| ------- | ----------- |
+| basemap | A basemap. |
+| overlay | An overlay with transparent background to show on top of basemaps. |
+| data    | A layer with the actual data to show on top of the other layer types. |
+
+**One of** the following roles may be used to indicate whether a layer should be shown by default.
+If none of the roles is provided, it's up to the discretion of the implementation to choose.
+
+| Role      | Description |
+| --------- | ----------- |
+| visible   | Make the layer *visible* by default. |
+| invisible | Make the layer *invisible* by default. |
+
+Additionally, the following role may be used:
+
+| Role    | Description |
+| ------- | ----------- |
+| default | If multiple layers with the same type are visible, specify which one should be shown by default. |
 
 #### href:servers
 
