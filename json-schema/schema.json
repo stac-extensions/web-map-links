@@ -165,6 +165,31 @@
                 }
               }
             }
+          },
+          {
+            "$comment": "Defines FeatureServer links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "featureserver"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "pmtiles:layers": {
+                  "type": "object",
+                  "items": {
+                    "type": "string",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
           }
         ]
       }
