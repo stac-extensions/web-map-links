@@ -144,10 +144,9 @@ Links to a [ArcGIS FeatureServer](https://developers.arcgis.com/rest/services-re
 | Field Name      | Type                 | Description |
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `featureserver`. |
-| href            | string               | **REQUIRED**. Link to a FeatureServer service. Usually has the following form `https://<root>/<serviceName>/FeatureServer`|
+| href            | string               | **REQUIRED**. Link to a FeatureServer service. Usually has the following form `https://<root>/<serviceName>/FeatureServer` |
 | type            | string               | Recommended to be set to `application/json` |
 | featureserver:layers  | Map<string, string> | The layers included in the service. The key should be used as the `LayerId` when querying the service. For example: `https://<root>/<serviceName>/FeatureServer/<layerId>/query` |
-
 
 ### General
 
