@@ -137,6 +137,17 @@ Links to a [TileJSON](https://github.com/mapbox/tilejson-spec) document.
 | href       | string | **REQUIRED**. Link to the valid TileJSON document. |
 | type       | string | Recommended to be set to `application/json`. |
 
+### FeatureServer
+
+Links to a [ArcGIS FeatureServer](https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/) service. 
+
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| rel             | string               | **REQUIRED**. Must be set to `arcgis-featureserver`. |
+| href            | string               | **REQUIRED**. Link to a FeatureServer service. Usually has the following form `https://<root>/<serviceName>/FeatureServer` |
+| type            | string               | Recommended to be set to `application/json` |
+| featureserver:layers  | Map<string, string> | The layers included in the service. The key should be used as the `LayerId` when querying the service. For example: `https://<root>/<serviceName>/FeatureServer/<layerId>/query` |
+
 ### General
 
 The following field applies to multiple types of web mapping services:

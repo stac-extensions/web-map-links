@@ -95,6 +95,15 @@
       "pmtiles:layers": [
         "streets"
       ]
+    },
+    {
+      "href": "https://service.arcgis.com/arcgis/rest/datast/FeatureServer",
+      "rel": "arcgis-featureserver",
+      "title": "ArcGIS FeatureServer",
+      "type": "application/json",
+      "featureserver:layers": {
+        "0": "streets"
+      }
     }
   ]
 }

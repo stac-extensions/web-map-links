@@ -165,6 +165,27 @@
                 }
               }
             }
+          },
+          {
+            "$comment": "Defines FeatureServer links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "arcgis-featureserver"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "featureserver:layers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              }
+            }
           }
         ]
       }
