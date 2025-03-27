@@ -171,21 +171,17 @@
             "if": {
               "properties": {
                 "rel": {
-                  "const": "featureserver"
+                  "const": "arcgis-featureserver"
                 }
               }
             },
             "then": {
               "properties": {
-                "pmtiles:layers": {
+                "featureserver:layers": {
                   "type": "object",
-                  "items": {
+                  "additionalProperties": {
                     "type": "string",
-                    "minItems": 1,
-                    "items": {
-                      "type": "string",
-                      "minLength": 1
-                    }
+                    "minLength": 1
                   }
                 }
               }

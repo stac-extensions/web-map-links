@@ -98,7 +98,7 @@
     },
     {
       "href": "https://service.arcgis.com/arcgis/rest/datast/FeatureServer",
-      "rel": "featureserver",
+      "rel": "arcgis-featureserver",
       "title": "ArcGIS FeatureServer",
       "type": "application/json",
       "featureserver:layers": {
