@@ -76,6 +76,9 @@
                 }
               ],
               "if": {
+                "required": [
+                  "wmts:encoding"
+                ],
                 "properties": {
                   "wmts:encoding": {
                     "const": "rest"
@@ -84,9 +87,20 @@
               },
               "then": {
                 "$comment": "REST request encoding",
+                "required": [
+                  "wmts:layer"
+                ],
                 "properties": {
+                  "wmts:layer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "wmts:encoding": {
                     "const": "rest"
+                  },
+                  "uriTemplate": {
+                    "type": "string",
+                    "minLength": 1
                   },
                   "variables": {
                     "type": "object",
@@ -100,11 +114,6 @@
                   "wmts:layer"
                 ],
                 "properties": {
-                  "wmts:encoding": {
-                    "enum": [
-                      "kvp"
-                    ]
-                  },
                   "wmts:layer": {
                     "oneOf": [
                       {
@@ -120,6 +129,9 @@
                         }
                       }
                     ]
+                  },
+                  "wmts:encoding": {
+                    "const": "kvp"
                   },
                   "wmts:dimensions": {
                     "type": "object",
