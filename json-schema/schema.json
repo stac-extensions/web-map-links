@@ -70,38 +70,65 @@
               }
             },
             "then": {
-              "required": [
-                "wmts:layer"
-              ],
-              "properties": {
-                "wmts:layer": {
-                  "oneOf": [
-                    {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    {
-                      "type": "array",
-                      "minItems": 1,
-                      "items": {
-                        "type": "string",
-                        "minLength": 1
-                      }
-                    }
-                  ]
-                },
-                "wmts:dimensions": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              },
               "allOf": [
                 {
                   "$ref": "#/definitions/servers"
                 }
-              ]
+              ],
+              "if": {
+                "properties": {
+                  "wmts:encoding": {
+                    "const": "rest"
+                  }
+                }
+              },
+              "then": {
+                "$comment": "REST request encoding",
+                "properties": {
+                  "wmts:encoding": {
+                    "const": "rest"
+                  },
+                  "variables": {
+                    "type": "object",
+                    "description": "This object contains one key per substitution variable in the templated URL. Each key defines the schema of one substitution variable using a JSON Schema fragment and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc."
+                  }
+                }
+              },
+              "else": {
+                "$comment": "KVP request encoding",
+                "required": [
+                  "wmts:layer"
+                ],
+                "properties": {
+                  "wmts:encoding": {
+                    "enum": [
+                      "kvp"
+                    ]
+                  },
+                  "wmts:layer": {
+                    "oneOf": [
+                      {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      }
+                    ]
+                  },
+                  "wmts:dimensions": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
             }
           },
           {
