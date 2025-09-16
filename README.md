@@ -120,6 +120,7 @@ and can thus include things like the data type of the variable, enumerations, mi
 Note that clients may have varying capabilities to parse and hanle the schemas provided for the variables.
 If you want to ensure that the WMTS can be easily read, stick to very simply schemas
 (e.g., enums for strings, minimum/maximum values for numbers).
+Providing a reasonable default value for all variables is recommended.
 
 ### PMTiles
 
