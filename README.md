@@ -115,12 +115,16 @@ This describes the REST request encoding, which provides a URL template with var
 | uriTemplate   | string           | Can override the URL template from the capabilities document with a custom version that can be customized with the `variables` provided. |
 | variables     | Map\<string, \*> | This object contains one key per substitution variable in the `urlTemplate`. |
 
-**variables**: Each key defines the schema of one substitution variable using a JSON Schema fragmen
-and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc.
-Note that clients may have varying capabilities to parse and hanle the schemas provided for the variables.
-If you want to ensure that the WMTS can be easily read, stick to very simply schemas
+**variables**: Each key defines the schema of one substitution variable using a JSON Schema fragment.
+
+Providing a reasonable default value for all variables is strongly recommended as they
+are likely to be used for a default visualization.
+Additional information such as the data type of the variable, enumerations, minimum values, maximum values, etc.
+can be provided for creating interactive UIs where the user can select values depending on the schema.
+Note that clients may have varying capabilities to parse and handle the schemas provided for the variables.
+If you want to ensure that the WMTS can be easily read, stick to very simple schemas
 (e.g., enums for strings, minimum/maximum values for numbers).
-Providing a reasonable default value for all variables is recommended.
+
 Variables with a constant value should be encoded directly in the URL without using a variable.
 
 ### PMTiles
