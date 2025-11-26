@@ -115,7 +115,12 @@ This describes the REST request encoding, which provides a URL template with var
 | uriTemplate   | string           | Can override the URL template from the capabilities document with a custom version that can be customized with the `variables` provided. |
 | variables     | Map\<string, \*> | This object contains one key per substitution variable in the `urlTemplate`. |
 
-**variables**: This object may provide a JSON Schema definition for any variable defined in the `uriTemplate`, allowing to provide the default value for the specific STAC resource or the specification of ranges or other constraints.
+**variables**: This object may provide a JSON Schema definition for any variable defined in the `uriTemplate`,
+allowing to provide the default value for the specific STAC resource or the specification of ranges or other constraints.
+
+The variables `{TileMatrixSet}`, `{TileMatrix}`, `{TileRow}`, `{TileCol}` do not need to be provided
+explicitly in the `variables` as they can be determined from the capabilities.
+Nevertheless, the corresponding variables can be provided if they should be further restricted to certain values or other contraints.
 
 Providing a reasonable default value for all variables is strongly recommended as they
 are likely to be used for a default visualization.
