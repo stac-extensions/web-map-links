@@ -115,7 +115,7 @@ This describes the REST request encoding, which provides a URL template with var
 | uriTemplate   | string           | Can override the URL template from the capabilities document with a custom version that can be customized with the `variables` provided. |
 | variables     | Map\<string, \*> | This object contains one key per substitution variable in the `urlTemplate`. |
 
-**variables**: Each key defines the schema of one substitution variable using a JSON Schema fragment.
+**variables**: This object may provide a JSON Schema definition for any variable defined in the `uriTemplate`, allowing to provide the default value for the specific STAC resource or the specification of ranges or other constraints.
 
 Providing a reasonable default value for all variables is strongly recommended as they
 are likely to be used for a default visualization.
