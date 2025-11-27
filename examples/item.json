@@ -58,6 +58,35 @@
       ]
     },
     {
+      "href": "https://maps.example.com/wmts",
+      "rel": "wmts",
+      "type": "image/png",
+      "title": "Mosaic visualized through a WMTS (KVP)",
+      "wmts:layer": "mosaic",
+      "wmts:dimensions": {
+        "time": "2025"
+      }
+    },
+    {
+      "href": "https://maps.example.com/wmts/WMTSCapabilities.xml",
+      "rel": "wmts",
+      "type": "application/xml",
+      "title": "Mosaic visualized through a WMTS (REST)",
+      "wmts:encoding": "rest",
+      "wmts:layer": "mosaic",
+      "uriTemplate": "https://maps.example.com/wmts/rest/mosaic/2025/{style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
+      "variables": {
+        "style": {
+          "type": "string",
+          "enum": [
+            "rgb",
+            "grayscale"
+          ],
+          "default": "rgb"
+        }
+      }
+    },
+    {
       "href": "https://maps.example.com/wms",
       "rel": "wms",
       "type": "image/png",

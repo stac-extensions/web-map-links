@@ -12,6 +12,7 @@ This document explains the Web Map Links Extension to the
 It allows to provide links to web map services for visualization purposes.
 
 The following services are supported:
+
 - [3D Tiles](#3d-tiles)
 - [OGC WMS](#ogc-wms)
 - [OGC WMTS](#ogc-wmts)
@@ -20,6 +21,7 @@ The following services are supported:
 - [XYZ](#xyz)
 
 Important resources in this extension:
+
 - Examples:
   - [Item example](examples/item.json): Shows the basic usage of the extension in a STAC Item
   - [Collection example](examples/collection.json): Shows the basic usage of the extension in a STAC Collection
@@ -74,22 +76,61 @@ Links to a [OGC Web Map Tile Service](https://www.ogc.org/standards/wmts) (WMTS)
 | Field Name      | Type                 | Description |
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wmts`. |
-| href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific query parameters. |
-| type            | string               | The media type to be used for the tile requests, e.g. `image/png` or `image/jpeg`. |
+| href            | string               | **REQUIRED**. Link to the WMTS, without any WMTS specific parameters. |
 | href:servers    | \[string]            | See [href:servers](#hrefservers) below for details. |
-| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map by default, either a list of layer names or a single layer name. |
-| wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs, usually added as query parameters. |
+| wmts:layer      | string\|\[string]    | **REQUIRED**. The layers to show on the map, either a list of layer names (KVP only) or a single layer name (REST and KVP). |
+| wmts:encoding   | string               | The WMTS request encoding, either `kvp` for [KVP](#kvp) or `rest`for [REST](#rest). Defaults to `kvp`. |
 
-If you provide multiple array elements in `wmts:layer` (e.g. `["layerA", "layerB"]`),
+**href**:
+
+- For REST encoding, the `href` must point to the capabilities document.
+- For KVP encoding, the `href` points to the URL of the capabilities document without any query parameters.
+  So if your Capabilities can be requested from `https://example.com/geoserver/service/wmts?service=wmts&request=GetCapabilities`
+  you'd provide `https://example.com/geoserver/service/wmts` as `href`.
+- The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
+
+**wmts:layer**: If you provide multiple array elements in `wmts:layer` (e.g. `["layerA", "layerB"]`),
 each should occur in a separate layer in the mapping library so that individual requests for the layers are sent.
+For REST-encoding only a single string can be provided.
 
-#### href
+#### KVP
 
-For WMTS, the `href` is pointing to the URL of the Capabilities document, but without the query parameters for the Capabilities request.
-So if your Capabilities can be requested from `https://example.com/geoserver/service/wmts?service=wmts&request=GetCapabilities`
-you'd provide `https://example.com/geoserver/service/wmts` as `href`.
+This describes the key-value-pair (KVP) request encoding,
+which uses query parameters to transmit additional parameters.
 
-The `href` can contain an optional server placeholder `{s}`. If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
+| Field Name      | Type                 | Description |
+| --------------- | -------------------- | ----------- |
+| type            | string               | The media type to be used for the tile requests, e.g. `image/png` or `image/jpeg`. |
+| wmts:encoding   | string               | If provided, must be set to `kvp`. |
+| wmts:dimensions | Map\<string, string> | Any additional dimension parameters to add to the request as key-value-pairs (i.e. query parameters). |
+
+#### REST
+
+This describes the REST request encoding, which provides a URL template with variables.
+
+| Field Name    | Type             | Description |
+| ------------- | ---------------- | ----------- |
+| type          | string           | If provided, must be set to `application/xml`. |
+| wmts:encoding | string           | **REQUIRED**. Must be set to `rest`. |
+| uriTemplate   | string           | Can override the URL template from the capabilities document with a custom version that can be customized with the `variables` provided. |
+| variables     | Map\<string, \*> | This object contains one key per substitution variable in the `urlTemplate`. |
+
+**variables**: This object may provide a JSON Schema definition for any variable defined in the `uriTemplate`,
+allowing to provide the default value for the specific STAC resource or the specification of ranges or other constraints.
+
+The variables `{TileMatrixSet}`, `{TileMatrix}`, `{TileRow}`, `{TileCol}` do not need to be provided
+explicitly in the `variables` as they can be determined from the capabilities.
+Nevertheless, the corresponding variables can be provided if they should be further restricted to certain values or other contraints.
+
+Providing a reasonable default value for all variables is strongly recommended as they
+are likely to be used for a default visualization.
+Additional information such as the data type of the variable, enumerations, minimum values, maximum values, etc.
+can be provided for creating interactive UIs where the user can select values depending on the schema.
+Note that clients may have varying capabilities to parse and handle the schemas provided for the variables.
+If you want to ensure that the WMTS can be easily read, stick to very simple schemas
+(e.g., enums for strings, minimum/maximum values for numbers).
+
+Variables with a constant value should be encoded directly in the URL without using a variable.
 
 ### PMTiles
 
@@ -119,9 +160,7 @@ Links to a XYZ, also known as slippy map.
 | type         | string    | Recommended to be set to the image file type the XYZ returns by default, usually `image/png` or `image/jpeg`. |
 | href:servers | \[string] | See [href:servers](#hrefservers) below for details. |
 
-#### href
-
-For XYZ, the `href` is a templated URI.
+**href**: For XYZ, the `href` is a templated URI.
 It MUST include the following placeholders: `{x}`, `{y}` and `{z}` and MAY include a placeholder for the server: `{s}`.
 If `{s}` is used, the field [`href:servers`](#hrefservers) MUST be provided.
 All other parameters should be [hard-coded](https://github.com/stac-extensions/web-map-links/issues/2) with specific values,
