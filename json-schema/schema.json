@@ -37,6 +37,7 @@
               "xyz",
               "wms",
               "wmts",
+              "wcs",
               "tilejson",
               "pmtiles",
               "3d-tiles"
@@ -180,6 +181,26 @@
                 },
                 "wms:transparent": {
                   "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "$comment": "Defines WCS links",
+            "if": {
+              "properties": {
+                "rel": {
+                  "const": "wcs"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "href"
+              ],
+              "properties": {
+                "href": {
+                  "type": "string"
                 }
               }
             }

@@ -90,6 +90,11 @@
       }
     },
     {
+      "href": "https://maps.example.com/ImageServer/WCSServer",
+      "rel": "wcs",
+      "title": "RGB composite analysis through a WCS"
+    },
+    {
       "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}.png",
       "rel": "xyz",
       "type": "image/png",
