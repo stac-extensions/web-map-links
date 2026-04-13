@@ -78,6 +78,8 @@ Links to a [OGC Web Coverage Service](https://www.ogc.org/standards/wcs/) (WCS) 
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wcs`. |
 | href            | string               | **REQUIRED**. Link to the WCS, without any WCS specific query parameters. |
+| wcs:coverages   | \[string]            | **REQUIRED**. The coverage ids to request coverage for at a selected set of spatio-temporal locations, expedited in some coverage encoding format |
+| type            | string               | The media type to be used for the tile requests, e.g. `image/tiff` or `image/netcdf`. |
 
 ### OGC WMTS
 
