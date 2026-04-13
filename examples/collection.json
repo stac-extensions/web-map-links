@@ -94,6 +94,7 @@
       "rel": "wcs",
       "type": "image/tiff",
       "title": "RGB composite analysis through a WCS",
+      "version": "2.0.1",
       "wcs:coverages": [
         "ndgd_ozone_1hr_avg_bc_ozone_colormap",
         "ndgd_ozone_1hr_avg_bc"

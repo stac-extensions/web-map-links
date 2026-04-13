@@ -72,12 +72,13 @@ If you want to send multiple layers in a single request, provide them as a strin
 
 ### OGC WCS
 
-Links to a [OGC Web Coverage Service](https://www.ogc.org/standards/wcs/) (WCS) implementation (versions 2.0.x).
+Links to a [OGC Web Coverage Service](https://www.ogc.org/standards/wcs/) (WCS) implementation.
 
 | Field Name      | Type                 | Description |
 | --------------- | -------------------- | ----------- |
 | rel             | string               | **REQUIRED**. Must be set to `wcs`. |
 | href            | string               | **REQUIRED**. Link to the WCS, without any WCS specific query parameters. |
+| version         | string               | **REQUIRED**. WCS service version indicator  |
 | wcs:coverages   | \[string]            | **REQUIRED**. The coverage ids to request coverage for at a selected set of spatio-temporal locations, expedited in some coverage encoding format |
 | type            | string               | The media type to be used for the tile requests, e.g. `image/tiff` or `image/netcdf`. |
 

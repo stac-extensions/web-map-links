@@ -197,10 +197,14 @@
             "then": {
               "required": [
                 "href",
+                "version",
                 "wcs:coverages"
               ],
               "properties": {
                 "href": {
+                  "type": "string"
+                },
+                "version": {
                   "type": "string"
                 },
                 "wcs:coverages": {
