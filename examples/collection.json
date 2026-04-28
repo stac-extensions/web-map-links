@@ -90,6 +90,17 @@
       }
     },
     {
+      "href": "https://maps.example.com/ImageServer/WCSServer",
+      "rel": "wcs",
+      "type": "image/tiff",
+      "title": "RGB composite analysis through a WCS",
+      "version": "2.0.1",
+      "wcs:coverages": [
+        "ndgd_ozone_1hr_avg_bc_ozone_colormap",
+        "ndgd_ozone_1hr_avg_bc"
+      ]
+    },
+    {
       "href": "https://{s}.maps.example.com/xyz/{z}/{x}/{y}.png",
       "rel": "xyz",
       "type": "image/png",
