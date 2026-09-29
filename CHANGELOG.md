@@ -6,6 +6,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Fields `min_resolution` and `max_resolution` for all web map links to indicate in which resolutions a layer provides useful content
+- XYZ: Fields `tile_matrix_set`, `min_zoom` and `max_zoom`
+- XYZ: Placeholder `{-y}` for rows counted from the bottom (TMS)
+- XYZ: Support for vector tiles, incl. the field `layers`
+- WMTS: Field `tile_matrix_set` to select the TileMatrixSet from the capabilities
+- TileJSON: Field `layers` for vector tiles
+- Documentation for the migration from v1
+
+### Changed
+
+- Each web map link represents exactly one map layer
+- XYZ must be provided as link template in `linkTemplates` (Link Templates Extension) with `uriTemplate` instead of `href`
+- XYZ: The servers for `{s}` are provided as `enum` of the variable `s` instead of `href:servers`
+- WMS: `wms:layers` renamed to `layers`, all layers are requested together in a single request
+- WMS: `wms:styles` are parallel to `layers` and allow empty strings for the default style
+- WMS and WMTS: `wms:dimensions` and `wmts:dimensions` renamed to `dimensions`, also applies to the REST encoding of WMTS
+- WMTS: `wmts:layer` renamed to `layers` and requires an array with exactly one element
+- WMTS: The `type` in the REST encoding is the media type of the tiles, not `application/xml`
+- PMTiles: `pmtiles:layers` renamed to `layers`
+
+### Removed
+
+- XYZ: `href:servers` (use the variable `s` instead)
+
 ## [1.3.0]
 
 ### Added

@@ -1,19 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json#",
+  "$id": "https://stac-extensions.github.io/web-map-links/v2.0.0/schema.json#",
   "title": "Web Map Links Extension",
   "description": "STAC Web Map Links Extension for STAC Items, STAC Catalogs and STAC Collections.",
   "type": "object",
   "required": [
     "stac_extensions",
-    "type",
-    "links"
+    "type"
   ],
   "properties": {
     "stac_extensions": {
       "type": "array",
       "contains": {
-        "const": "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+        "const": "https://stac-extensions.github.io/web-map-links/v2.0.0/schema.json"
       }
     },
     "type": {
@@ -26,190 +25,434 @@
     },
     "links": {
       "type": "array",
-      "contains": {
-        "type": "object",
-        "required": [
-          "rel"
-        ],
-        "properties": {
-          "rel": {
-            "enum": [
-              "xyz",
-              "wms",
-              "wmts",
-              "tilejson",
-              "pmtiles",
-              "3d-tiles"
-            ]
+      "items": {
+        "$ref": "#/definitions/link"
+      }
+    },
+    "linkTemplates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/linkTemplate"
+      }
+    }
+  },
+  "anyOf": [
+    {
+      "$comment": "At least one web map link",
+      "required": [
+        "links"
+      ],
+      "properties": {
+        "links": {
+          "contains": {
+            "type": "object",
+            "required": [
+              "rel"
+            ],
+            "properties": {
+              "rel": {
+                "enum": [
+                  "wms",
+                  "wmts",
+                  "tilejson",
+                  "pmtiles",
+                  "3d-tiles"
+                ]
+              }
+            }
           }
         }
-      },
-      "items": {
-        "type": "object",
-        "allOf": [
-          {
-            "$comment": "Defines XYZ links",
-            "if": {
-              "properties": {
-                "rel": {
-                  "const": "xyz"
-                }
-              }
-            },
-            "then": {
-              "$ref": "#/definitions/servers"
-            }
-          },
-          {
-            "$comment": "Defines WMTS links",
-            "if": {
-              "properties": {
-                "rel": {
-                  "const": "wmts"
-                }
-              }
-            },
-            "then": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/servers"
-                }
-              ],
-              "if": {
-                "required": [
-                  "wmts:encoding"
-                ],
-                "properties": {
-                  "wmts:encoding": {
-                    "const": "rest"
-                  }
-                }
-              },
-              "then": {
-                "$comment": "REST request encoding",
-                "required": [
-                  "wmts:layer"
-                ],
-                "properties": {
-                  "wmts:layer": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "wmts:encoding": {
-                    "const": "rest"
-                  },
-                  "uriTemplate": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "variables": {
-                    "type": "object",
-                    "description": "This object contains one key per substitution variable in the templated URL. Each key defines the schema of one substitution variable using a JSON Schema fragment and can thus include things like the data type of the variable, enumerations, minimum values, maximum values, etc."
-                  }
-                }
-              },
-              "else": {
-                "$comment": "KVP request encoding",
-                "required": [
-                  "wmts:layer"
-                ],
-                "properties": {
-                  "wmts:layer": {
-                    "oneOf": [
-                      {
-                        "type": "string",
-                        "minLength": 1
-                      },
-                      {
-                        "type": "array",
-                        "minItems": 1,
-                        "items": {
-                          "type": "string",
-                          "minLength": 1
-                        }
-                      }
-                    ]
-                  },
-                  "wmts:encoding": {
-                    "const": "kvp"
-                  },
-                  "wmts:dimensions": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          {
-            "$comment": "Defines WMS links",
-            "if": {
-              "properties": {
-                "rel": {
-                  "const": "wms"
-                }
-              }
-            },
-            "then": {
-              "required": [
-                "wms:layers"
-              ],
-              "properties": {
-                "wms:layers": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "wms:styles": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "wms:dimensions": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                },
-                "wms:transparent": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
-          {
-            "$comment": "Defines PMTiles links",
-            "if": {
-              "properties": {
-                "rel": {
-                  "const": "pmtiles"
-                }
-              }
-            },
-            "then": {
-              "properties": {
-                "pmtiles:layers": {
-                  "type": "array",
-                  "items": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                }
-              }
-            }
+      }
+    },
+    {
+      "$comment": "At least one web map link template",
+      "required": [
+        "linkTemplates"
+      ],
+      "properties": {
+        "linkTemplates": {
+          "contains": {
+            "$ref": "#/definitions/xyzRel"
           }
-        ]
+        }
+      }
+    }
+  ],
+  "if": {
+    "required": [
+      "linkTemplates"
+    ],
+    "properties": {
+      "linkTemplates": {
+        "contains": {
+          "$ref": "#/definitions/xyzRel"
+        }
+      }
+    }
+  },
+  "then": {
+    "$comment": "XYZ link templates require the link templates extension",
+    "properties": {
+      "stac_extensions": {
+        "contains": {
+          "type": "string",
+          "pattern": "^https://stac-extensions\\.github\\.io/link-templates/v1\\.[^/]+/schema\\.json$"
+        }
       }
     }
   },
   "definitions": {
+    "xyzRel": {
+      "type": "object",
+      "required": [
+        "rel"
+      ],
+      "properties": {
+        "rel": {
+          "const": "xyz"
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "allOf": [
+        {
+          "$comment": "XYZ must be provided as link template",
+          "if": {
+            "$ref": "#/definitions/xyzRel"
+          },
+          "then": false
+        },
+        {
+          "$comment": "Defines WMS links",
+          "if": {
+            "required": [
+              "rel"
+            ],
+            "properties": {
+              "rel": {
+                "const": "wms"
+              }
+            }
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/common"
+              },
+              {
+                "$ref": "#/definitions/dimensions"
+              },
+              {
+                "$ref": "#/definitions/legacy"
+              }
+            ],
+            "required": [
+              "layers"
+            ],
+            "properties": {
+              "layers": {
+                "$ref": "#/definitions/layers"
+              },
+              "wms:styles": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "wms:transparent": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Defines WMTS links",
+          "if": {
+            "required": [
+              "rel"
+            ],
+            "properties": {
+              "rel": {
+                "const": "wmts"
+              }
+            }
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/common"
+              },
+              {
+                "$ref": "#/definitions/dimensions"
+              },
+              {
+                "$ref": "#/definitions/legacy"
+              },
+              {
+                "$ref": "#/definitions/servers"
+              },
+              {
+                "if": {
+                  "required": [
+                    "wmts:encoding"
+                  ],
+                  "properties": {
+                    "wmts:encoding": {
+                      "const": "rest"
+                    }
+                  }
+                },
+                "then": {
+                  "$comment": "REST request encoding",
+                  "properties": {
+                    "uriTemplate": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "variables": {
+                      "type": "object"
+                    }
+                  }
+                },
+                "else": {
+                  "$comment": "KVP request encoding",
+                  "properties": {
+                    "uriTemplate": {
+                      "not": {}
+                    },
+                    "variables": {
+                      "not": {}
+                    }
+                  }
+                }
+              }
+            ],
+            "required": [
+              "layers"
+            ],
+            "properties": {
+              "layers": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/layers"
+                  },
+                  {
+                    "maxItems": 1
+                  }
+                ]
+              },
+              "wmts:encoding": {
+                "type": "string",
+                "enum": [
+                  "kvp",
+                  "rest"
+                ]
+              },
+              "tile_matrix_set": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Defines PMTiles and TileJSON links",
+          "if": {
+            "required": [
+              "rel"
+            ],
+            "properties": {
+              "rel": {
+                "enum": [
+                  "pmtiles",
+                  "tilejson"
+                ]
+              }
+            }
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/common"
+              },
+              {
+                "$ref": "#/definitions/legacy"
+              }
+            ],
+            "properties": {
+              "layers": {
+                "$ref": "#/definitions/layers"
+              }
+            }
+          }
+        },
+        {
+          "$comment": "Defines 3D Tiles links",
+          "if": {
+            "required": [
+              "rel"
+            ],
+            "properties": {
+              "rel": {
+                "const": "3d-tiles"
+              }
+            }
+          },
+          "then": {
+            "$ref": "#/definitions/common"
+          }
+        }
+      ]
+    },
+    "linkTemplate": {
+      "type": "object",
+      "allOf": [
+        {
+          "$comment": "Defines XYZ link templates",
+          "if": {
+            "$ref": "#/definitions/xyzRel"
+          },
+          "then": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/common"
+              },
+              {
+                "$comment": "{s} requires a list of at least two servers",
+                "if": {
+                  "required": [
+                    "uriTemplate"
+                  ],
+                  "properties": {
+                    "uriTemplate": {
+                      "pattern": "\\{s\\}"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "variables"
+                  ],
+                  "properties": {
+                    "variables": {
+                      "required": [
+                        "s"
+                      ],
+                      "properties": {
+                        "s": {
+                          "type": "object",
+                          "required": [
+                            "enum"
+                          ],
+                          "properties": {
+                            "enum": {
+                              "type": "array",
+                              "minItems": 2,
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "required": [
+              "uriTemplate"
+            ],
+            "properties": {
+              "uriTemplate": {
+                "type": "string",
+                "allOf": [
+                  {
+                    "pattern": "\\{z\\}"
+                  },
+                  {
+                    "pattern": "\\{x\\}"
+                  },
+                  {
+                    "pattern": "\\{-?y\\}"
+                  }
+                ]
+              },
+              "href:servers": {
+                "not": {}
+              },
+              "layers": {
+                "$ref": "#/definitions/layers"
+              },
+              "tile_matrix_set": {
+                "type": "string",
+                "minLength": 1
+              },
+              "min_zoom": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "max_zoom": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "common": {
+      "properties": {
+        "min_resolution": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "max_resolution": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "layers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "dimensions": {
+      "properties": {
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "legacy": {
+      "$comment": "Fields from v1 that have been renamed",
+      "properties": {
+        "wms:layers": {
+          "not": {}
+        },
+        "wms:dimensions": {
+          "not": {}
+        },
+        "wmts:layer": {
+          "not": {}
+        },
+        "wmts:dimensions": {
+          "not": {}
+        },
+        "pmtiles:layers": {
+          "not": {}
+        }
+      }
+    },
     "servers": {
       "if": {
         "required": [

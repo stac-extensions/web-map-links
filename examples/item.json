@@ -1,7 +1,8 @@
 {
-  "stac_version": "1.0.0",
+  "stac_version": "1.1.0",
   "stac_extensions": [
-    "https://stac-extensions.github.io/web-map-links/v1.3.0/schema.json"
+    "https://stac-extensions.github.io/link-templates/v1.0.0/schema.json",
+    "https://stac-extensions.github.io/web-map-links/v2.0.0/schema.json"
   ],
   "type": "Feature",
   "id": "item",
@@ -51,29 +52,39 @@
       "href": "https://maps.example.com/wmts",
       "rel": "wmts",
       "type": "image/png",
-      "title": "RGB composite visualized through a WMTS",
-      "wmts:layer": [
-        "streets",
-        "satellite"
+      "title": "Streets visualized through a WMTS",
+      "layers": [
+        "streets"
       ]
     },
     {
       "href": "https://maps.example.com/wmts",
       "rel": "wmts",
       "type": "image/png",
+      "title": "Satellite imagery visualized through a WMTS",
+      "layers": [
+        "satellite"
+      ],
+      "tile_matrix_set": "WebMercatorQuad"
+    },
+    {
+      "href": "https://maps.example.com/wmts",
+      "rel": "wmts",
+      "type": "image/png",
       "title": "Mosaic visualized through a WMTS (KVP)",
-      "wmts:layer": "mosaic",
-      "wmts:dimensions": {
+      "dimensions": {
         "time": "2025"
-      }
+      },
+      "layers": [
+        "mosaic"
+      ]
     },
     {
       "href": "https://maps.example.com/wmts/WMTSCapabilities.xml",
       "rel": "wmts",
-      "type": "application/xml",
+      "type": "image/png",
       "title": "Mosaic visualized through a WMTS (REST)",
       "wmts:encoding": "rest",
-      "wmts:layer": "mosaic",
       "uriTemplate": "https://maps.example.com/wmts/rest/mosaic/2025/{style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png",
       "variables": {
         "style": {
@@ -84,23 +95,21 @@
           ],
           "default": "rgb"
         }
-      }
+      },
+      "layers": [
+        "mosaic"
+      ]
     },
     {
       "href": "https://maps.example.com/wms",
       "rel": "wms",
       "type": "image/png",
       "title": "RGB composite visualized through a WMS",
-      "wms:layers": [
+      "wms:transparent": true,
+      "layers": [
         "rgb"
       ],
-      "wms:transparent": true
-    },
-    {
-      "href": "https://maps.example.com/xyz/{z}/{x}/{y}.jpg",
-      "rel": "xyz",
-      "type": "image/jpeg",
-      "title": "RGB composite visualized through a XYZ"
+      "max_resolution": 1000
     },
     {
       "href": "https://maps.example.com/item/tilejson.json",
@@ -119,10 +128,22 @@
       "rel": "pmtiles",
       "title": "PMTiles",
       "type": "application/vnd.pmtiles",
-      "pmtiles:layers": [
+      "layers": [
         "streets"
       ]
     }
   ],
-  "assets": {}
+  "assets": {},
+  "linkTemplates": [
+    {
+      "rel": "xyz",
+      "type": "image/jpeg",
+      "title": "RGB composite visualized through a XYZ",
+      "uriTemplate": "https://maps.example.com/xyz/{z}/{x}/{y}.jpg",
+      "min_zoom": 6,
+      "max_zoom": 18,
+      "min_resolution": 0.5,
+      "max_resolution": 2000
+    }
+  ]
 }
