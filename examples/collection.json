@@ -141,8 +141,13 @@
       "layers": [
         "roads"
       ],
-      "min_zoom": 0,
-      "max_zoom": 14
+      "variables": {
+        "z": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 14
+        }
+      }
     },
     {
       "rel": "xyz",

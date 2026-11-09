@@ -45,47 +45,25 @@ This allows clients and other specifications to refer to each layer individually
 
 ### Fields for all web map links
 
-| Field Name     | Type   | Description |
-| -------------- | ------ | ----------- |
-| rel            | string | **REQUIRED**. The service type, see the sections below. |
-| type           | string | The media type of the tiles or images the client requests (e.g. `image/png`), unless specified otherwise below. |
-| title          | string | A title for the layer, e.g. for a layer switcher. |
-| min_resolution | number | The finest resolution at which the layer provides useful content, see [resolution ranges](#resolution-ranges). |
-| max_resolution | number | The coarsest resolution at which the layer provides useful content, see [resolution ranges](#resolution-ranges). |
+| Field Name | Type   | Description |
+| ---------- | ------ | ----------- |
+| rel        | string | **REQUIRED**. The service type, see the sections below. |
+| type       | string | The media type of the tiles or images the client requests (e.g. `image/png`), unless specified otherwise below. |
+| title      | string | A title for the layer, e.g. for a layer switcher. |
 
 An attribution field is not defined as part of this extension, but it is RECOMMENDED to provide an attribution
 via the `attribution` field as defined in the [Attribution Extension](https://github.com/stac-extensions/attribution).
 
-### Resolution ranges
+### Zoom levels and visibility
 
-`min_resolution` and `max_resolution` describe the range of resolutions in which a layer provides useful content,
-e.g. because a service only provides tiles for some levels or because the data gets meaningless beyond some level.
-Clients SHOULD hide the layer outside of this range.
-If `min_resolution` is provided, it must be lower than or equal to `max_resolution`.
+This extension describes services, not how they are shown on a map.
+The zoom levels or scales for which a service provides content are usually part of its metadata,
+e.g. the `TileMatrixSetLimits` in the WMTS capabilities, `minzoom` and `maxzoom` in TileJSON,
+or the PMTiles header, so they are not repeated here.
+XYZ has no such metadata, so the available zoom levels can be provided in the link template, see [XYZ](#xyz).
 
-The resolution is the **distance on the ground in meters per display (CSS) pixel**, measured at the center of the
-spatial extent of the STAC entity (`bbox` in Items, the first bounding box of the spatial extent in Collections).
-This makes the value independent of the coordinate reference system (CRS) of the map.
-Clients convert the value into the units of their map CRS, e.g. with `getPointResolution` in OpenLayers.
-
-For example, a `max_resolution` of `1000` for data centered at 48° North converts to:
-
-| Map CRS                    | Resolution in map units |
-| -------------------------- | ----------------------- |
-| EPSG:25832 (UTM zone 32N)  | ≈ 1000 m per pixel |
-| EPSG:3857 (Web Mercator)   | ≈ 1000 / cos(48°) ≈ 1494 m per pixel |
-| EPSG:4326 (WGS 84)         | ≈ 0.0134° per pixel horizontally, ≈ 0.0090° per pixel vertically |
-
-The ground resolution varies over large extents, so the range is approximate far from the center.
-Clients MAY evaluate it at the center of the current view instead,
-which is also the fallback for Catalogs and other cases where no spatial extent is available.
-
-The data-side counterpart is `raster:spatial_resolution` of the [Raster Extension](https://github.com/stac-extensions/raster),
-which is also measured in meters on the ground.
-`gsd` is not suitable to derive the range as it describes the sensor, not the pixels of the data.
-
-The available zoom levels of tiled services are provided separately (see e.g. `min_zoom` and `max_zoom` for [XYZ](#xyz)),
-as they depend on the tiling scheme.
+In which range of resolutions a layer should be visible on a map is not part of this extension.
+It can be defined, for example, with the [Maps Extension](https://github.com/stac-extensions/maps).
 
 ### 3D Tiles
 
@@ -221,12 +199,11 @@ XYZ must be provided as Link Template Object in `linkTemplates`, see [Links and 
 | type            | string           | Recommended to be set to the media type of the tiles, usually `image/png` or `image/jpeg` for raster tiles and `application/vnd.mapbox-vector-tile` for vector tiles. |
 | layers          | \[string]        | For vector tiles, the layers to show on the map by default. If not provided, it's up to the discretion of the implementation to choose a layer. |
 | tile_matrix_set | string           | The tiling scheme, either the identifier of a well-known [OGC TileMatrixSet](https://docs.ogc.org/is/17-083r4/17-083r4.html) (e.g. `WorldCRS84Quad`) or a URL to a TileMatrixSet JSON document. Defaults to `WebMercatorQuad`. |
-| min_zoom        | integer          | The lowest zoom level (`{z}`) for which tiles are available, in the given `tile_matrix_set`. |
-| max_zoom        | integer          | The highest zoom level (`{z}`) for which tiles are available, in the given `tile_matrix_set`. |
 
 **uriTemplate**: It MUST include the placeholders `{x}` and `{z}` and either `{y}` or `{-y}`.
 `{-y}` indicates that the rows are counted from the bottom instead of the top, as in the Tile Map Service (TMS) specification.
-These placeholders don't need to be described in `variables`.
+These placeholders don't need to be described in `variables`,
+except for `z` to indicate the zoom levels for which tiles are available, see below.
 It MAY include a placeholder for the server: `{s}`.
 If `{s}` is used, `variables` MUST contain a variable `s` with an `enum` of at least two values.
 Implementations can expand the given values into multiple URLs to send requests to multiple servers,
@@ -236,9 +213,11 @@ you can expand that to `["https://a.example.com/{z}/{x}/{y}.png", "https://b.exa
 All other parameters should be [hard-coded](https://github.com/stac-extensions/web-map-links/issues/2) with specific values,
 e.g. the `{r}` parameter in Leaflet could be replaced by `2x`.
 
-**min_zoom** and **max_zoom**: Clients should not request tiles outside of this range.
-They may still show the layer beyond `max_zoom` by scaling up the tiles of `max_zoom`.
-Use [resolution ranges](#resolution-ranges) to indicate in which range the layer should be visible.
+**Zoom levels**: The zoom levels for which tiles are available, in the given `tile_matrix_set`,
+can be provided as `minimum` and `maximum` of the variable `z`.
+For example: `"variables": {"z": {"type": "integer", "minimum": 6, "maximum": 14}}`.
+Clients should not request tiles outside of this range,
+but they may still show the layer beyond the `maximum` by scaling up the tiles of the highest zoom level.
 
 ### General
 

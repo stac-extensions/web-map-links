@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Fields `min_resolution` and `max_resolution` for all web map links to indicate in which resolutions a layer provides useful content
-- XYZ: Fields `tile_matrix_set`, `min_zoom` and `max_zoom`
+- XYZ: Field `tile_matrix_set`
+- XYZ: Available zoom levels via `minimum` and `maximum` of the variable `z`
 - XYZ: Placeholder `{-y}` for rows counted from the bottom (TMS)
 - XYZ: Support for vector tiles, incl. the field `layers`
 - WMTS: Field `tile_matrix_set` to select the TileMatrixSet from the capabilities

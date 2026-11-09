@@ -138,9 +138,6 @@
           "then": {
             "allOf": [
               {
-                "$ref": "#/definitions/common"
-              },
-              {
                 "$ref": "#/definitions/dimensions"
               },
               {
@@ -181,9 +178,6 @@
           },
           "then": {
             "allOf": [
-              {
-                "$ref": "#/definitions/common"
-              },
               {
                 "$ref": "#/definitions/dimensions"
               },
@@ -275,9 +269,6 @@
           "then": {
             "allOf": [
               {
-                "$ref": "#/definitions/common"
-              },
-              {
                 "$ref": "#/definitions/legacy"
               }
             ],
@@ -286,22 +277,6 @@
                 "$ref": "#/definitions/layers"
               }
             }
-          }
-        },
-        {
-          "$comment": "Defines 3D Tiles links",
-          "if": {
-            "required": [
-              "rel"
-            ],
-            "properties": {
-              "rel": {
-                "const": "3d-tiles"
-              }
-            }
-          },
-          "then": {
-            "$ref": "#/definitions/common"
           }
         }
       ]
@@ -316,9 +291,6 @@
           },
           "then": {
             "allOf": [
-              {
-                "$ref": "#/definitions/common"
-              },
               {
                 "$comment": "{s} requires a list of at least two servers",
                 "if": {
@@ -390,30 +362,27 @@
                 "type": "string",
                 "minLength": 1
               },
-              "min_zoom": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "max_zoom": {
-                "type": "integer",
-                "minimum": 0
+              "variables": {
+                "properties": {
+                  "z": {
+                    "type": "object",
+                    "properties": {
+                      "minimum": {
+                        "type": "integer",
+                        "minimum": 0
+                      },
+                      "maximum": {
+                        "type": "integer",
+                        "minimum": 0
+                      }
+                    }
+                  }
+                }
               }
             }
           }
         }
       ]
-    },
-    "common": {
-      "properties": {
-        "min_resolution": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        },
-        "max_resolution": {
-          "type": "number",
-          "exclusiveMinimum": 0
-        }
-      }
     },
     "layers": {
       "type": "array",
